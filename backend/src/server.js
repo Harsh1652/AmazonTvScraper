@@ -4,8 +4,8 @@ const { scrapeAmazonTV } = require("./services/scraperService");
 
 const app = express();
 
-// ✅ Enable CORS (Allow requests from frontend)
-app.use(cors({ origin: "http://localhost:3000" })); 
+// Enable CORS (Allow requests from frontend)
+app.use(cors({ origin: "https://amazontvscrapper.netlify.app/" }));
 
 app.use(express.json());
 
