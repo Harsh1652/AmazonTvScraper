@@ -1,15 +1,19 @@
-const { chromium } = require('playwright');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 exports.scrapeAmazonTV = async (url) => {
-    const browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
-    
-    await page.goto(url, { waitUntil: 'domcontentloaded' });
+    try {
+        const { data } = await axios.get(url, {
+            headers: {
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+            }
+        });
 
-    const productData = await page.evaluate(() => {
-        const getText = (selector) => document.querySelector(selector)?.innerText.trim() || 'N/A';
-        const getAllTexts = (selector) => Array.from(document.querySelectorAll(selector)).map(el => el.innerText.trim());
-        const getAllImages = (selector) => Array.from(document.querySelectorAll(selector)).map(el => el.src);
+        const $ = cheerio.load(data);
+
+        const getText = (selector) => $(selector).text().trim() || 'N/A';
+        const getAllTexts = (selector) => $(selector).map((_, el) => $(el).text().trim()).get();
+        const getAllImages = (selector) => $(selector).map((_, el) => $(el).attr('src')).get();
 
         return {
             productName: getText('#productTitle'),
@@ -23,8 +27,8 @@ exports.scrapeAmazonTV = async (url) => {
             amazonImages: getAllImages('#imgTagWrapperId img'),
             manufacturerImages: getAllImages('#aplus img')
         };
-    });
-
-    await browser.close();
-    return productData;
+    } catch (error) {
+        console.error("Scraping failed:", error.message);
+        return { error: "Failed to fetch data" };
+    }
 };
