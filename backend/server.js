@@ -4,8 +4,21 @@ const { scrapeAmazonTV } = require("./src/services/scraperService");
 
 const app = express();
 
-// ✅ Enable CORS (Allow requests from frontend)
-app.use(cors({ origin: "http://localhost:3000" })); 
+// ✅ Allow multiple origins (Localhost + Netlify)
+const allowedOrigins = [
+    "http://localhost:3000",  
+    "https://amazonscrapper.netlify.app/"
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    }
+}));
 
 app.use(express.json());
 
