@@ -3,10 +3,9 @@ const cheerio = require('cheerio');
 
 exports.scrapeAmazonTV = async (url) => {
     try {
-        const { data } = await axios.get(url, {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
-            }
+        const proxyUrl = "https://corsproxy.io/?"; // Public CORS proxy
+        const { data } = await axios.get(proxyUrl + encodeURIComponent(url), {
+            headers: { "User-Agent": "Mozilla/5.0" }
         });
 
         const $ = cheerio.load(data);
