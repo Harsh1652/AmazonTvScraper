@@ -14,7 +14,7 @@ export default function AmazonScraper() {
     setError(null);
 
     try {
-      const response = await fetch("https://amazon-tv-backend.onrender.com/api/scraper/amazon", {
+      const response = await fetch("https://amazontvscraper.onrender.com/api/scraper/amazon", {
       method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url }),
