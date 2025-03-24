@@ -16,7 +16,7 @@ exports.scrapeAmazonTV = async (url) => {
             numberOfRatings: getText('#acrCustomerReviewText'),
             sellingPrice: getText('.a-price .a-offscreen'),
             totalDiscount: getText('.savingsPercentage'),
-            bankOffers: getAllTexts('.celwidget div.a-spacing-micro span'),
+            bankOffers: getAllTexts('.a-section .a-spacing-none span.a-text-bold'),
             aboutThisItem: getAllTexts('#feature-bullets ul li span'),
             productInformation: getAllTexts('#productDetails_techSpec_section_1 tbody tr'),
             amazonImages: getAllImages('#imgTagWrapperId img'),
