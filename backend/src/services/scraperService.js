@@ -1,11 +1,14 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
+const SCRAPER_API_KEY = "61e8dde877d36af5236cab97f3b2dde9"; 
+
 exports.scrapeAmazonTV = async (url) => {
     try {
-        const proxyUrl = "https://corsproxy.io/?"; // Public CORS proxy
-        const { data } = await axios.get(proxyUrl + encodeURIComponent(url), {
-            headers: { "User-Agent": "Mozilla/5.0" }
+        const scraperUrl = `http://api.scraperapi.com?api_key=${SCRAPER_API_KEY}&url=${encodeURIComponent(url)}`;
+
+        const { data } = await axios.get(scraperUrl, {
+            headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" }
         });
 
         const $ = cheerio.load(data);
@@ -19,12 +22,10 @@ exports.scrapeAmazonTV = async (url) => {
             rating: getText('.a-icon-alt'),
             numberOfRatings: getText('#acrCustomerReviewText'),
             sellingPrice: getText('.a-price .a-offscreen'),
-            totalDiscount: getText('.savingsPercentage'),
+            totalDiscount: getText('.priceBlockSavingsString'), // Updated selector
             bankOffers: getAllTexts('.a-section .a-spacing-none span.a-text-bold'),
             aboutThisItem: getAllTexts('#feature-bullets ul li span'),
-            productInformation: getAllTexts('#productDetails_techSpec_section_1 tbody tr'),
             amazonImages: getAllImages('#imgTagWrapperId img'),
-            manufacturerImages: getAllImages('#aplus img')
         };
     } catch (error) {
         console.error("Scraping failed:", error.message);
