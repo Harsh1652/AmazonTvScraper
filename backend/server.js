@@ -7,7 +7,7 @@ const app = express();
 // ✅ Allow multiple origins (Localhost + Netlify)
 const allowedOrigins = [
     "http://localhost:3000",  
-    "https://amazonscrapper.netlify.app/"
+    "https://amazonscrapper.netlify.app"
 ];
 
 app.use(cors({
