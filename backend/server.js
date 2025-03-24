@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");  
-const { scrapeAmazonTV } = require("./services/scraperService");  
+const { scrapeAmazonTV } = require("./src/services/scraperService");  
 
 const app = express();
 
-// Enable CORS (Allow requests from frontend)
-app.use(cors({ origin: "https://amazontvscrapper.netlify.app/" }));
+// ✅ Enable CORS (Allow requests from frontend)
+app.use(cors({ origin: "http://localhost:3000" })); 
 
 app.use(express.json());
 

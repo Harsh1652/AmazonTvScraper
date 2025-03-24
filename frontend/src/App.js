@@ -57,17 +57,26 @@ export default function AmazonScraper() {
 
       {data && (
         <Card className="mt-6 p-6 bg-white shadow-lg rounded-xl w-full max-w-2xl">
-          <CardContent>
-            <h2 className="text-2xl font-semibold text-gray-900">
-              {data.productName}
-            </h2>
-            <p className="text-gray-600 mt-1">
-              ⭐ {data.rating} ({data.numRatings} reviews)
-            </p>
-            <p className="text-xl font-bold text-blue-600 mt-2">
-              💰 {data.sellingPrice}
-            </p>
-            <p className="text-sm text-green-600">{data.totalDiscount}</p>
+          <CardContent> 
+  <h2 className="text-2xl font-semibold text-gray-900">
+    {data.productName}
+  </h2>
+
+  {/* Reviews Section */}
+    <h3 className="text-lg font-semibold text-gray-700 mt-2">Reviews</h3>
+    <p className="text-gray-600">
+      ⭐ {data.rating} ({data.numRatings} reviews)
+    </p>
+
+    {/* Price Section */}
+    <h3 className="text-lg font-semibold text-gray-700 mt-2">Price</h3>
+    <p className="text-xl font-bold text-blue-600">
+      💰 {data.sellingPrice}
+    </p>
+
+    {/* Discount Section */}
+    <h3 className="text-lg font-semibold text-gray-700 mt-2">Discount</h3>
+    <p className="text-sm text-green-600">{data.totalDiscount}</p>
 
             {data.bankOffers.length > 0 && (
               <div className="mt-4">
